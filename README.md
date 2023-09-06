@@ -5,6 +5,10 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
 ## Sumário
 
 - [Comparação](#comparação)
+- [Atualização](#atualização)
+  - [Verificação dos requisitos](#verificação-dos-requisitos)
+  - [Backup](#backup)
+  - [Etapas para atualização do GLPI](#etapas-para-atualização-do-glpi)
 - [Utilização do plugin GLPI Agent e GLPI Agent Monitor](#utilização-do-plugin-glpi-agent-e-glpi-agent-monitor)
   - [Download](#download)
   - [Instalação](#instalação)
@@ -21,6 +25,32 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
 | Base de Conhecimento | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/d80a8606-e5d3-4121-9a65-96bd6a6619d4) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/80ebe7d3-e25d-4d7c-a89c-6177b9799f02) |
 | Acesso aos Menus | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/5d7fc77c-599d-4c51-965d-cd25396d83b2) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/9fa1c2f5-8e5b-44b4-9cb0-3c0571b4fa05) |
 | Visão global | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/429a9cca-940a-4649-b2b8-b0f03016c780) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/48e0cf9e-4cb3-4a06-a433-759268ccadee) |
+
+## Atualização
+
+### Verificação dos requisitos
+
+- Antes de instalar ou [atualizar](https://glpi-install.readthedocs.io/pt/latest/update.html), os requisitos são verificados automaticamente; mas você pode executá-los separadamente e ver o estado de todos eles usando o comando `php bin/console glpi:system:check_requirements`.
+
+### Backup
+- Backup do **Banco de Dados**;
+- Backup do diretório `config`, especialmente para o seu arquivo de chave GLPI (`config/glpi.key` ou `config/glpicrypt.key`) que é gerado aleatoriamente;
+- Backup do diretório `files`, que contém arquivos gerados por **usuários** e _plugins_, como documentos "upados";
+- Backup dos diretórios `marketplace` e `plugins`.
+  
+### Etapas para atualização do GLPI
+-  Baixe a [última versão](https://github.com/glpi-project/glpi/releases) do GLPI
+-  Certifique-se de que o diretório de destino esteja vazio e extraia os arquivos lá.
+-  Restaure os diretórios `config`, `files`, `marketplace` e `plugins`.
+-  Em seguida, abra a URI da instância GLPI em seu navegador ou use a ferramenta de linha de comando `php bin/console db:update` (recomendado).
+ 
+> **AVISO:** Você não deve tentar restaurar um backup de banco de dados em um banco de dados não vazio (por exemplo, um banco de dados parcialmente migrado por qualquer motivo).
+>
+> Verifique se o banco de dados está vazio antes de restaurar o backup e tente atualizar, e repita o processo caso ocorra alguma falha.
+
+> **NOTA:** O processo de atualização desativará automaticamente seus plugins.
+
+> **NOTA:** Desde o GLPI 10.0.1, você pode usar a ferramenta de linha de comando `php bin/console db:check` antes de executar o comando **update**. Isso permitirá que você verifique a integridade do seu banco de dados e identifique alterações que possam comprometer a atualização.
 
 ## Utilização do plugin GLPI Agent e GLPI Agent Monitor
 
