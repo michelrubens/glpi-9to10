@@ -16,7 +16,7 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
  
 ## Comparação
 
-| | GLPI 9.5.5 | GLPI 10.0.9 |
+| | GLPI 9.5.5 | GLPI 10.0.7 |
 | :--- | :---: | :---: |
 | Criação de chamado à partir da tela inicial | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/dc7a5b37-b2fd-4b33-9f15-d1074e500442) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/2561f98e-c139-4b34-8c6c-ba4d9d55b5ee) |
 | Formulário de criação de chamado (Technician) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/ec9e01d1-7135-4792-b657-37114149d8f1) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/cafc71a7-a2cb-4f5b-a30d-2a1dcace430e) |
