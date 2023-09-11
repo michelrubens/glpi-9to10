@@ -9,6 +9,8 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
   - [Verificação dos requisitos](#verificação-dos-requisitos)
   - [Backup](#backup)
   - [Etapas para atualização do GLPI](#etapas-para-atualização-do-glpi)
+- [Fuso Horários](#fuso-horários)
+  - [Utilizadores não Windows](#utilizadores-não-windows) 
 - [Utilização do plugin GLPI Agent e GLPI Agent Monitor](#utilização-do-plugin-glpi-agent-e-glpi-agent-monitor)
   - [Download](#download)
   - [Instalação](#instalação)
@@ -54,6 +56,24 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
 
 > [!NOTE]
 > Desde o GLPI 10.0.1, você pode usar a ferramenta de linha de comando `php bin/console db:check` antes de executar o comando **update**. Isso permitirá que você verifique a integridade do seu banco de dados e identifique alterações que possam comprometer a atualização.
+
+## Fuso Horários
+
+Para que os fusos horários funcionem em uma instância do MariaDB/MySQL, você precisará inicializar os dados dos fusos horários e permitir que o usuário do banco de dados GLPI leia a ACL em sua tabela.
+
+> [!WARNING]
+> Atualmente, o MySQL e o MariaDB têm uma data máxima limitada a 2038-01-19 em campos que dependem do tipo `timestamp`!
+
+### Utilizadores não Windows
+
+Na maioria dos sistemas, você precisará inicializar os dados dos fusos horários a partir dos fusos horários do sistema:
+
+```console
+mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -p -u root mysql
+```
+Você pode verificar a documentação do MariaDB sobre mysql_tzinfo_to_sql e a documentação do sistema para saber onde os dados estão armazenados (se não estiver em `/usr/share/zoneinfo`).
+
+Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem-sucedido.
 
 ## Utilização do plugin GLPI Agent e GLPI Agent Monitor
 
