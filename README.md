@@ -17,7 +17,7 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
   - [Forçando inventário](#forçando-inventário)
 - [Utilização do plugin Form Creator](#utilização-do-plugin-form-creator)
   - [Criação](#criação)
-  - [Edição](#utilização)
+  - [Edição](#edição)
   - [Utilização](#utilização)
  
 ## Comparação
@@ -125,14 +125,14 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
 ## Utilização do plugin Form Creator
 
 ### Criação
-
+> Super-Admin
 - ➡Menu Principal
   » 🛡Administração
     » 📋Formulários
       » ➕Adicionar
 
 ### Edição
-
+> Super-Admin
 - 📝Formulário - `Nome do formulário`
   - Formulário
     - Nome, Categoria, Ícone, Descrição, ...
@@ -158,10 +158,15 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
     - Respostas do formulário: _Todas as respostas ao formulário_
 
 ### Utilização
+> Self-Service
+- ➡Menu Principal
+  » 📋Formulários
 
+> Super-Admin ou Technician
 - ➡Menu Principal
   » 🎧Assistência
     » 📋Formulários
+
 
 - Painel Principal (`/formlist.php`)
   - Formulários
@@ -173,8 +178,12 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
   - Organização por popularidade
   - Organização por ordem alfabética
  
-- 🏠Home (Self-Service)
+- 🏠Home
 
-  ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/9104ad68-6860-4f4d-afaa-633e90f83993)
+  |  | GLPI 10.0.9 |
+  | --- | --- |
+  | Self-Service | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/9104ad68-6860-4f4d-afaa-633e90f83993) |
+  | Technician | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/b11c663b-441c-4519-be4f-ac3d094d8c3f) |
+ 
 
 
