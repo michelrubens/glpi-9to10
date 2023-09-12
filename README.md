@@ -181,7 +181,7 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
 - 🏠Home
 
   |  | GLPI 10.0.9 |
-  | --- | --- |
+  | --- | :---: |
   | Self-Service | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/9104ad68-6860-4f4d-afaa-633e90f83993) |
   | Technician | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/b11c663b-441c-4519-be4f-ac3d094d8c3f) |
  
