@@ -126,6 +126,7 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
 
 ### Criação
 > Super-Admin
+
 - ➡Menu Principal
   » 🛡Administração
     » 📋Formulários
@@ -133,6 +134,7 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
 
 ### Edição
 > Super-Admin
+
 - 📝Formulário - `Nome do formulário`
   - Formulário
     - Nome, Categoria, Ícone, Descrição, ...
@@ -159,24 +161,25 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
 
 ### Utilização
 > Self-Service
+
 - ➡Menu Principal
   » 📋Formulários
 
 > Super-Admin ou Technician
+
 - ➡Menu Principal
   » 🎧Assistência
     » 📋Formulários
 
+  - Painel Principal (`/formlist.php`)
+    - Formulários
+      - Ícone, Nome, Descrição
+        - Visualização:
 
-- Painel Principal (`/formlist.php`)
-  - Formulários
-    - Ícone, Nome, Descrição
-      - Visualização:
-
-        ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/31884395-0521-4827-b4a5-da88c004b0be)
-  - Visualização por Categoria
-  - Organização por popularidade
-  - Organização por ordem alfabética
+          ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/31884395-0521-4827-b4a5-da88c004b0be)
+    - Visualização por Categoria
+    - Organização por popularidade
+    - Organização por ordem alfabética
  
 - 🏠Home
 
