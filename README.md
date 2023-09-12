@@ -117,3 +117,41 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
 ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/aeab45db-8b5a-4a09-962c-80c19a12f8d7)
 
 ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/073214f6-7cb9-43ea-9775-ae75b0741798)
+
+## Utilização do plugin Form Creator
+
+### Criação
+
+- ➡Menu Principal
+  » 🛡Administração
+    » 📋Formulários
+      » ➕Adicionar
+
+### Edição
+
+- 📝Formulário - `Nome do formulário`
+  - Formulário
+    - Nome, Categoria, Ícone, Descrição, ...
+  - Questões
+    - ➕Adicionar uma questão
+      - Nome, Tipo, Descrição, ...
+  - Alvo
+    - ➕Adicionar em alvo
+      - Nome, Tipo
+    - Seleciona um alvo para editar
+      - Chamado alvo
+        - Título do chamado: "`##ansewer_1##` | `##ansewer_2`"
+          - <font size="1">Ex: _"BP153348 | Backup e Formatação"_</font>
+        - Descrição: "`##FULLFORM##`"
+    - Pré-visualização
+    - Propriedades de resposta do formulário
+      - Lista de 'tags' disponíveis
+        - | Questão | Título | Resposta | Seção |
+          | --- | --- | --- | --- |
+          | Formulário completo | - | `##FULLFORM##` | - |
+          | Questão 1 | `##question_1##` | `##answer_1##` | Seção 1 |
+          | Questão 2 | `##question_2##` | `##answer_2##` | Seção 1 |
+  
+- ➡Menu Principal
+  » 🎧Assistência
+    » 📋Formulários
