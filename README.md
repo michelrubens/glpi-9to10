@@ -15,6 +15,10 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
   - [Download](#download)
   - [Instalação](#instalação)
   - [Forçando inventário](#forçando-inventário)
+- [Utilização do plugin Form Creator](#utilização-do-plugin-form-creator)
+  - [Criação](#criação)
+  - [Edição](#utilização)
+  - [Utilização](#utilização)
  
 ## Comparação
 
@@ -141,7 +145,7 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
     - Seleciona um alvo para editar
       - Chamado alvo
         - Título do chamado: "`##ansewer_1##` | `##ansewer_2`"
-          - <font size="1">Ex: _"BP153348 | Backup e Formatação"_</font>
+          - Ex: _"BP153348 | Backup e Formatação"_
         - Descrição: "`##FULLFORM##`"
     - Pré-visualização
     - Propriedades de resposta do formulário
@@ -151,7 +155,26 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
           | Formulário completo | - | `##FULLFORM##` | - |
           | Questão 1 | `##question_1##` | `##answer_1##` | Seção 1 |
           | Questão 2 | `##question_2##` | `##answer_2##` | Seção 1 |
-  
+    - Respostas do formulário: _Todas as respostas ao formulário_
+
+### Utilização
+
 - ➡Menu Principal
   » 🎧Assistência
     » 📋Formulários
+
+- Painel Principal (`/formlist.php`)
+  - Formulários
+    - Ícone, Nome, Descrição
+      - Visualização:
+
+        ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/31884395-0521-4827-b4a5-da88c004b0be)
+  - Visualização por Categoria
+  - Organização por popularidade
+  - Organização por ordem alfabética
+ 
+- 🏠Home (Self-Service)
+
+  ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/9104ad68-6860-4f4d-afaa-633e90f83993)
+
+
