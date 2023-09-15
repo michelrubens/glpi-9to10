@@ -5,7 +5,7 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
 ## Sumário
 
 - [Comparação](#comparação)
-- [Instalação/Atualização com Docker](#instalção-atualização-com-docker)
+- [Instalação/Atualização com Docker](#instalação-atualização-com-docker)
   - [Instalação do Docker no Debian](#instalação-do-docker-no-debian)
   - [Instalação do Portainer](#instalação-do-portainer)
   - [Instalação do GLPI 10 em Docker](#instalação-do-glpi-10-em-docker)
