@@ -5,7 +5,7 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
 ## Sumário
 
 - [Comparação](#comparação)
-- [Atualização com Docker](#atualização-com-docker)
+- [Instalação/Atualização com Docker](#instalção-atualização-com-docker)
   - [Instalação do Docker no Debian](#instalação-do-docker-no-debian)
   - [Instalação do Portainer](#instalação-do-portainer)
   - [Instalação do GLPI 10 em Docker](#instalação-do-glpi-10-em-docker)
@@ -38,7 +38,7 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
 | Acesso aos Menus | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/5d7fc77c-599d-4c51-965d-cd25396d83b2) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/9fa1c2f5-8e5b-44b4-9cb0-3c0571b4fa05) |
 | Visão global | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/429a9cca-940a-4649-b2b8-b0f03016c780) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/48e0cf9e-4cb3-4a06-a433-759268ccadee) |
 
-## Atualização com Docker
+## Instalação/Atualização com Docker
 
 ### Instalação do Docker no Debian
 
