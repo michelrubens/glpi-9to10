@@ -6,10 +6,10 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
 
 - [Comparação](#comparação)
 - [Atualização com Docker](#atualização-com-docker)
-  - [Instalação do Docker no Debian]
-  - [Instalação do Portainer]
-  - [Instalação do GLPI 10 em Docker]
-  - [Atualização do GLPI 9.5.5 para o 10.0.9 em Docker]
+  - [Instalação do Docker no Debian](#instalação-do-docker-no-debian)
+  - [Instalação do Portainer](#instalação-do-portainer)
+  - [Instalação do GLPI 10 em Docker](#instalação-do-glpi-10-em-docker)
+  - [Atualização do GLPI 9.5.5 para o 10.0.9 em Docker](#atualização-do-glpi-955-para-o-1009-em-docker)
 - [Atualização](#atualização)
   - [Verificação dos requisitos](#verificação-dos-requisitos)
   - [Backup](#backup)
@@ -24,6 +24,7 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
   - [Criação](#criação)
   - [Edição](#edição)
   - [Utilização](#utilização)
+- [Fontes](#fontes)
  
 ## Comparação
 
@@ -439,6 +440,9 @@ Não esqueça de reiniciar o servidor de banco de dados quando o comando for bem
   | --- | :---: |
   | Self-Service | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/9104ad68-6860-4f4d-afaa-633e90f83993) |
   | Technician | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/b11c663b-441c-4519-be4f-ac3d094d8c3f) |
- 
 
-
+---
+## Fontes:
+- [GLPI Documentation](https://glpi-project.org/documentation/)
+- [Service Desk Brasil](https://www.servicedeskbrasil.com.br/)
+- [Verdanatech](https://verdanatech.com/) 
