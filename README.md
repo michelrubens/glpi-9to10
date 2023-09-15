@@ -5,6 +5,11 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
 ## Sumário
 
 - [Comparação](#comparação)
+- [Atualização com Docker](#atualização-com-docker)
+  - [Instalação do Docker no Debian]
+  - [Instalação do Portainer]
+  - [Instalação do GLPI 10 em Docker]
+  - [Atualização do GLPI 9.5.5 para o 10.0.9 em Docker]
 - [Atualização](#atualização)
   - [Verificação dos requisitos](#verificação-dos-requisitos)
   - [Backup](#backup)
@@ -31,6 +36,253 @@ O GLPI 9.5 foi descontinuado em 30 de junho de 2023.
 | Base de Conhecimento | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/d80a8606-e5d3-4121-9a65-96bd6a6619d4) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/80ebe7d3-e25d-4d7c-a89c-6177b9799f02) |
 | Acesso aos Menus | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/5d7fc77c-599d-4c51-965d-cd25396d83b2) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/9fa1c2f5-8e5b-44b4-9cb0-3c0571b4fa05) |
 | Visão global | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/429a9cca-940a-4649-b2b8-b0f03016c780) | ![image](https://github.com/michelrubens/glpi-9to10/assets/61568495/48e0cf9e-4cb3-4a06-a433-759268ccadee) |
+
+## Atualização com Docker
+
+### Instalação do Docker no Debian
+
+Como root:
+```bash
+apt-get update
+```
+```bash
+apt-get install \
+  ca-certificates \
+  curl \
+  gnupg \
+  lsb-release
+```
+```bash
+mkdir -p /etc/apt/keyrings
+```
+```bash
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
+
+Repositório:
+```bash
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+Instalação do pacote:
+```bash
+apt-get update
+```
+```bash
+apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+
+Inicialização do serviço:
+```bash
+systemctl start docker
+```
+```bash
+systemctl enable docker
+```
+
+### Instalação do Portainer
+
+```bash
+docker volume create portainer_data
+```
+
+Edição Community:
+```bash
+docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+```
+
+http://`IP`:9443
+
+- Escolher o nome do usuário ou admin
+- Inserir a senha
+- Selecionar "Get Started"
+
+### Instalação do GLPI 10 em Docker
+
+GLPI 10.0.9
+
+Imagem: [sdbrasil/glpi](https://hub.docker.com/r/sdbrasil/glpi)
+
+Instalação do GLPI totalmente funcional, com dados persistentes em rede específica para comunicação entre os containers, em menos de 5 minutos.
+
+Um ponto importante de atenção são os campos descritos como `senha_`, necessário alterar a senha do Banco de Dados (Percona) do GLPI.
+
+Caso tenha interesse em alterar o nome dos containers `glpi_`, não esqueca de alterar dentro do comando do GLPI Console na instalação / nome do host do Banco de Dados.
+
+- Necessário analisar a porta "-p 8080:80".
+- Estamos expondo o GLPI para a porta 8080 do navegador
+- Caso queira alterar a porta (Ex: 80) você precisará alterar no comando "-p 80:80"
+
+**1. Criar os volumes de dados persistentes para que o GLPI rode de maneira segura**
+
+```bash
+mkdir -p /data/glpi-10-dcs/glpi/documents
+mkdir -p /data/glpi-10-dcs/glpi/marketplace
+mkdir -p /data/glpi-10-dcs/glpi/plugins
+mkdir -p /data/glpi-10-dcs/glpi/files/_pictures
+mkdir -p /data/glpi-10-dcs/glpi/files/_plugins
+mkdir -p /data/glpi-10-dcs/glpi/etc
+mkdir -p /data/glpi-10-dcs/backup
+mkdir -p /data/glpi-10-dcs/percona/lib
+mkdir -p /data/glpi-10-dcs/percona/log
+```
+
+**2. Ajuste permissões dos volumes**
+
+```bash
+chown 70:70 -R /data/glpi-10-dcs/glpi
+```
+```bash
+chown 1001:0 -R /data/glpi-10-dcs/percona
+```
+
+**3. Criar uma rede no Docker para uso exclusivo dos containers do GLPI**
+
+```bash
+docker network create glpi-dcs
+```
+
+**4. Container do Percona Server para o Banco de Dados em MySQL**
+
+```bash
+docker run -d --name glpi_db-dcs \
+--restart always \
+-v /data/glpi-10-dcs/percona/lib:/var/lib/mysql \
+-v /data/glpi-10-dcs/percona/log:/var/log/mysql \
+-e MYSQL_ROOT_PASSWORD=rootglpipassword \
+-e MYSQL_DATABASE=glpi \
+-e MYSQL_USER=glpi \
+-e MYSQL_PASSWORD=glpipassword \
+--network=glpi-dcs \
+percona/percona-server:5.7 \
+--character-set-server=utf8 \
+--collation-server=utf8_bin
+```
+
+**5. Container da Aplicação do GLPI com a imagem da Servicedesk Brasil**
+
+```bash
+docker run -d --name glpi_app-dcs --privileged  \
+-p 8080:80 \
+ -v /data/glpi-10-dcs/glpi/documents/:/var/lib/glpi/files/data-documents \
+-v /data/glpi-10-dcs/glpi/marketplace/:/var/lib/glpi/marketplace \
+-v /data/glpi-10-dcs/glpi/marketplace/:/usr/share/glpi/marketplace \
+-v /data/glpi-10-dcs/glpi/plugins/:/usr/share/glpi/plugins \
+-v /data/glpi-10-dcs/glpi/files/_pictures/:/var/lib/glpi/files/_pictures \
+-v /data/glpi-10-dcs/glpi/files/_plugins/:/var/lib/glpi/files/_plugins \
+-v /data/glpi-10-dcs/glpi/etc/:/etc/glpi \
+-v /data/glpi-10-dcs/backup/:/backup \
+--network=glpi-dcs \
+sdbrasil/glpi:10.0.9 /usr/sbin/init
+```
+
+**6. Instalação do GLPI dentro do Container via GLPI Console, caso queira fazer a instalação via navegador a aplicação está disponivel no endereço http://`IP`:8080**
+
+Acesso ao container via console do Sistema Operacional
+```bash
+docker exec -it glpi_app-dcs /bin/bash
+```
+
+Instalação do GLPI via Console
+```bash
+glpi-console glpi:database:install -L pt_BR -Hglpi_db-dcs -dglpi -uglpi -pglpipassword --no-telemetry --force -n && mv /usr/share/glpi/install /usr/share/glpi/install_ori && chown -R apache:apache /usr/share/glpi/marketplace/ && chown -R apache:apache /var/lib/glpi/files && chown -R apache:apache /var/log/glpi && chown -R apache:apache /var/lib/glpi/files/data-documents && rm -rf /var/log/glpi/*
+```
+
+### Atualização do GLPI 9.5.5 para o 10.0.9 em Docker
+
+- Imagem: [sdbrasil/glpi](https://hub.docker.com/r/sdbrasil/glpi)
+- Realizar Backup do Banco de Dados (do [Docker Percona Server MySQL](https://docs.percona.com/percona-server/8.0/installation/docker.html)) e dos arquivos persistentes.
+
+**1. Validar os volumes de dados persistentes para que o GLPI atualize de maneira segura**
+
+```bash
+mkdir -p /data/glpi-10-dcs/glpi/documents
+mkdir -p /data/glpi-10-dcs/glpi/marketplace
+mkdir -p /data/glpi-10-dcs/glpi/plugins
+mkdir -p /data/glpi-10-dcs/glpi/files/_pictures
+mkdir -p /data/glpi-10-dcs/glpi/files/_plugins
+mkdir -p /data/glpi-10-dcs/glpi/etc
+mkdir -p /data/glpi-10-dcs/backup
+mkdir -p /data/glpi-10-dcs/percona/lib
+mkdir -p /data/glpi-10-dcs/percona/log
+```
+
+**2. Desligar os containers**
+
+```bash
+docker stop glpi_app-dcs
+```
+```bash
+docker stop glpi_db-dcs
+```
+
+Cópia segura de todos os arquivos `/data/glpi-10-dcs`
+```bash
+mkdir -p /data/glpi-9-dcs-Backup-9.5.5
+```
+```bash
+cp -rp /data/glpi-10-dcs/ /data/glpi-9-dcs-Backup-9.5.5
+```
+
+Você pode executar o Backup do MySQL via console com `mysqldump` no container `glpi_db-dcs` para `/data/glpi-10-dcs/backup`.
+
+Backup:
+```bash
+mysqldump -u root -p nome_banco > backup.sql
+```
+
+Se o banco de dados apresentar algum problema e precisar ser restaurado a partir do backup, siga o procedimento a seguir:
+
+Restauração
+```bash
+mysql -u root -p nome_banco < backup.sql
+```
+
+Reiniciar o container Banco de Dados
+```bash
+docker start glpi_db-dcs
+```
+
+- Necessário analisar a porta "-p 8080:80".
+- Estamos expondo o GLPI para a porta 8080 do navegador
+- Caso queira alterar a porta (Ex: 80) você precisará alterar no comando "-p 80:80"
+
+**3. Parar o container da aplicação do GLPI e depois removê-lo**
+```bash
+docker stop glpi_app-dcs
+```
+```bash
+docker rm glpi_app-dcs
+```
+
+**4. Com base na TAG da nova versão, sdbrasil/glpi:10.0.9 vamos executar o comando com a nova imagem**
+```bash
+   docker run -d --name glpi_app-dcs --privileged  \
+   -p 8080:80 \
+   -v /data/glpi-10-dcs/glpi/documents/:/var/lib/glpi/files/data-documents \
+   -v /data/glpi-10-dcs/glpi/marketplace/:/var/lib/glpi/marketplace \
+   -v /data/glpi-10-dcs/glpi/marketplace/:/usr/share/glpi/marketplace \
+   -v /data/glpi-10-dcs/glpi/plugins/:/usr/share/glpi/plugins \
+   -v /data/glpi-10-dcs/glpi/files/_pictures/:/var/lib/glpi/files/_pictures \
+   -v /data/glpi-10-dcs/glpi/files/_plugins/:/var/lib/glpi/files/_plugins \
+   -v /data/glpi-10-dcs/glpi/etc/:/etc/glpi \
+   -v /data/glpi-10-dcs/backup/:/backup \
+   --network=glpi-dcs \
+   sdbrasil/glpi:10.0.9 /usr/sbin/init
+   ```
+
+**5. Atualização do GLPI dentro do container via GLPI console (caso queira fazer pelo navegador, a aplicação estará disponível no endereço _http://`IP`:8080_)**
+
+Acesso ao container via console do Sistema Operacional:
+   ```bash
+   docker exec -it glpi_app-dcs /bin/bash
+   ```
+Atualização do GLPI via console:
+   ```bash
+   glpi-console glpi:database:update --force -n && mv /usr/share/glpi/install /usr/share/glpi/install_ori && chown -R apache:apache /usr/share/glpi/marketplace/ && chown -R apache:apache /var/lib/glpi/files && chown -R apache:apache /var/log/glpi && chown -R apache:apache /var/lib/glpi/files/data-documents && cd /usr/share/glpi/plugins/ && glpi-console glpi:plugin:activate * && cd /usr/share/glpi/marketplace/ && glpi-console glpi:plugin:activate * && rm -rf /var/log/glpi/*
+   ```
 
 ## Atualização
 
